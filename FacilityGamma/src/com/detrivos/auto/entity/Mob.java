@@ -99,7 +99,7 @@ public abstract class Mob extends Entity {
 				int iy = (int) Math.ceil(yt);
 				if (c % 2 == 0) ix = (int) Math.floor(xt); 
 				if (c / 2 == 0) iy = (int) Math.floor(yt);
-				if (level.getTile(ix, iy).solid()) solid = true;
+				if (level.getTile(ix, iy).isSolid()) solid = true;
 			}
 			return solid;
 		}

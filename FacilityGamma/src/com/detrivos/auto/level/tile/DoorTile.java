@@ -17,7 +17,7 @@ public class DoorTile extends Tile {
 		return true;
 	}
 	
-	public boolean bulletSolid() {
+	public boolean isSolidToBullets() {
 		return true;
 	}
 }

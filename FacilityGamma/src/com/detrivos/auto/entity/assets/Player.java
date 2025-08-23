@@ -21,7 +21,6 @@ import com.detrivos.auto.input.Mouse;
 import com.detrivos.auto.level.tile.ChangeTile;
 import com.detrivos.auto.level.tile.DeadTile;
 import com.detrivos.auto.level.tile.DoorTile;
-import com.detrivos.auto.level.tile.LockerTile;
 import com.detrivos.auto.level.tile.PlayerTile;
 import com.detrivos.auto.level.tile.ToCryoTile;
 import com.detrivos.auto.level.tile.ToLeech1Tile;
@@ -280,22 +279,22 @@ public class Player extends Mob {
 		}
 
 		if (collision(4, 0) || collision(0, 4) || collision(-14, 0) || collision(0, -14)) {
-			if (level.getTile((int) (ox), (int) (oy)) instanceof LockerTile) {
-				if (level.getTile((int) (ox), (int) (oy)).hasGun()) {
-					if (isClothed)
-						animNum = 3;
-					else
-						animNum = 2;
-					isArmed = true;
-				}
+			System.out.println(level.getTile((int) (ox), (int) (oy)).hasGun());
+			System.out.println(level.getTile((int) (ox), (int) (oy)).hasClothes());
+			if (level.getTile((int) (ox), (int) (oy)).hasGun()) {
+				if (isClothed)
+					animNum = 3;
+				else
+					animNum = 2;
+				isArmed = true;
+			}
 
-				if (level.getTile((int) (ox), (int) (oy)).hasClothes()) {
-					if (isArmed)
-						animNum = 3;
-					else
-						animNum = 1;
-					isClothed = true;
-				}
+			if (level.getTile((int) (ox), (int) (oy)).hasClothes()) {
+				if (isArmed)
+					animNum = 3;
+				else
+					animNum = 1;
+				isClothed = true;
 			}
 		}
 
@@ -550,15 +549,9 @@ public class Player extends Mob {
 			} else {
 				collided = false;
 			}
-			if (level.getTile((int) (ox), (int) (oy)) instanceof LockerTile) {
-				if (level.getTile((int) (ox), (int) (oy)).hasGun()) {
-					s = "A pistol!";
-				}
+			if (level.getTile((int) (ox), (int) (oy)).hasGun()) {s = "A pistol!";}
 
-				if (level.getTile((int) (ox), (int) (oy)).hasClothes()) {
-					s = "Clothes!";
-				}
-			}
+			if (level.getTile((int) (ox), (int) (oy)).hasClothes()) {s = "Clothes!";}
 
 			if (level.getTile((int) (ox), (int) (oy)) instanceof ChangeTile && gunThought) {
 				s = "I should find something to protect myself...";
@@ -703,7 +696,7 @@ public class Player extends Mob {
 				ix = (int) Math.floor(xt);
 			if (c / 2 == 0)
 				iy = (int) Math.floor(yt);
-			if (level.getTile(ix, iy).solid())
+			if (level.getTile(ix, iy).isSolid())
 				solid = true;
 			ox = ix;
 			oy = iy;
