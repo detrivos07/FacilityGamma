@@ -159,23 +159,6 @@ public class Game extends Canvas implements Runnable {
 		addMouseListener(m);
 		addMouseMotionListener(m);
 	}
-//TODO:: This is overengineered for what this is
-	/// starts the program
-	public synchronized void start() {
-		running = true;
-		thread = new Thread(this, "Practice");
-		thread.start();
-	}
-
-	/// stops the program
-	public synchronized void stop() {
-		running = false;
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public static void pause(boolean bool) {
 		paused = bool;
@@ -221,7 +204,6 @@ public class Game extends Canvas implements Runnable {
 				frames = 0;
 			}
 		}
-		stop();
 	}
 
 	@SuppressWarnings("static-access")
@@ -234,7 +216,7 @@ public class Game extends Canvas implements Runnable {
 
 		if (exit) {
 			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-			stop();
+			running = false;
 		}
 
 		if (startStory) {
@@ -285,8 +267,8 @@ public class Game extends Canvas implements Runnable {
 		
 		if (key.isPaused(key.escape)) paused = true;
 		else paused = false;
-		
-		if (!onMainMenu) {
+
+		if (!onMainMenu && player != null) {
 			if (!onchal) {
 				if (player.dead) {// For respawn
 					if (!rMShown) {

@@ -15,18 +15,18 @@ public class BulletDrops extends Entity {
 	public boolean gave = false;
 	
 	public BulletDrops(double x, double y, BType t, int quantity) {
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 		this.t = t;
 		this.quantity = quantity;
 		if (t == BType.PISTOL || t == BType.SCATTER || t == BType.MACHINE) sprite = Sprite.bullets;
 		if (t == BType.ROCKET) sprite = Sprite.rocket;
 	}
-	
+
 	public void tick() {
 	}
 
 	public void render(Screen screen) {
-		screen.renderMob((int) x + 2, (int) y + 2, sprite);
+		screen.renderMob((int) xPos + 2, (int) yPos + 2, sprite);
 	}
 }

@@ -16,8 +16,8 @@ public class Medkit extends Entity {
 	public Tier t;
 
 	public Medkit(int x, int y, Tier t) {
-		this.x = (x << 4) + 5;
-		this.y = (y << 4) + 5;
+		this.xPos = (x << 4) + 5;
+		this.yPos = (y << 4) + 5;
 		this.t = t;
 		if (t == Tier.LOW) {
 			hp = 15;
@@ -35,6 +35,6 @@ public class Medkit extends Entity {
 	}
 
 	public void render(Screen screen) {
-		screen.renderMob((int) x, (int) y, sprite, this);
+		screen.renderMob((int) xPos, (int) yPos, sprite, this);
 	}
 }

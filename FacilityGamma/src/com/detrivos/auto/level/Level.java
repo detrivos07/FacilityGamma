@@ -41,8 +41,20 @@ public class Level {
 	
 	protected void loadLevel(String path) {
 	}
-	
+
+	private int tickCounter = 0;
 	public void tick() {
+		tickCounter++;
+		if (tickCounter % 60 == 0) {  // Every second
+			System.out.println("Level tick " + tickCounter/60 + "s - Entities: " + entities.size());
+		}
+
+		for (int i = 0; i < entities.size(); i++) {
+			System.out.println("Ticking entity " + i + ": " + entities.get(i).getClass().getSimpleName());
+			entities.get(i).tick();
+			System.out.println("Finished entity " + i);
+		}
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).tick();
 		}
@@ -62,19 +74,19 @@ public class Level {
 	}
 	
 	private void remove() {
-		for (int i = 0; i < entities.size(); i++) {
+		for (int i = entities.size() - 1; i >= 0; i--) {
 			if (entities.get(i).isRemoved()) entities.remove(i);
 		}
-		for (int i = 0; i < drops.size(); i++) {
+		for (int i = drops.size() - 1; i >= 0; i--) {
 			if (drops.get(i).isRemoved()) drops.remove(i);
 		}
-		for (int i = 0; i < bars.size(); i++) {
+		for (int i = bars.size() - 1; i >= 0; i--) {
 			if (bars.get(i).isRemoved()) bars.remove(i);
 		}
-		for (int i = 0; i < projectiles.size(); i++) {
+		for (int i = projectiles.size() - 1; i >= 0; i--) {
 			if (projectiles.get(i).isRemoved()) projectiles.remove(i);
 		}
-		for (int i = 0; i < players.size(); i++) {
+		for (int i = players.size() - 1; i >= 0; i--) {
 			if (players.get(i).isRemoved()) players.remove(i);
 		}
 	}

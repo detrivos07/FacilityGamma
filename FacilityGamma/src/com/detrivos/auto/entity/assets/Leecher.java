@@ -198,26 +198,34 @@ public class Leecher extends Entity {
 			if (collision(0, 0) & !collision(0, 1)) this.y += 0.5;
 			if (collision(0, 0) & !collision(0, -1)) this.y -= 0.5;
 			if (Math.abs(xa) > 1) {
-				if (!collision(Math.abs(xa), ya)) {
+				if (!collision(xa, ya)) {
 					this.x += xa;
 				}
-				xa -= Math.abs(xa);
+				if (xa > 0) {
+					xa -= Math.abs(xa);
+				} else {
+					xa += Math.abs(xa);
+				}
 			} else {
-				if (!collision(Math.abs(xa), ya)) {
+				if (!collision(xa, ya)) {
 					this.x += xa;
 				}
 				xa = 0;
 			}
 		}
-		
+
 		while (ya != 0) {
 			if (Math.abs(ya) > 1) {
-				if (!collision(xa, Math.abs(ya))) {
+				if (!collision(xa, ya)) {
 					this.y += ya;
 				}
-				ya -= Math.abs(ya);
+				if (ya > 0) {
+					ya -= Math.abs(ya);
+				} else {
+					ya += Math.abs(ya);
+				}
 			} else {
-				if (!collision(xa, Math.abs(ya))) {
+				if (!collision(xa, ya)) {
 					this.y += ya;
 				}
 				ya = 0;

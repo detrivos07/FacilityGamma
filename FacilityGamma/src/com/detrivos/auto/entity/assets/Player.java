@@ -101,8 +101,8 @@ public class Player extends Entity {
 	private AnimatedSprite anim = null;
 
 	public Player(int x, int y, Keyboard input, boolean story) {
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 		this.health = 100;
 		this.stamina = 100;
 		this.input = input;
@@ -237,8 +237,6 @@ public class Player extends Entity {
 		handleEntities();
 		handleExperience();
 
-		double xa = 0, ya = 0;
-
 		if (hasControl) {
 			if (input.run && (input.up || input.down || input.left || input.right) && stamina > 0 && !hitZero) {
 				speed = 1.5;
@@ -261,19 +259,19 @@ public class Player extends Entity {
 				fireRate--;
 
 			if (input.up) {
-				ya -= speed;
+				yMov -= speed;
 			} else if (input.down) {
-				ya += speed;
+				yMov += speed;
 			}
 			if (input.left) {
-				xa -= speed;
+				xMov -= speed;
 			} else if (input.right) {
-				xa += speed;
+				xMov += speed;
 			}
 		}
 
 		if (animFin && !hasControl) {
-			xa -= 0.2;
+			xMov -= 0.2;
 			anim.setFrameRate(15);
 		}
 
@@ -320,13 +318,8 @@ public class Player extends Entity {
 		} else {
 			Game.toleech1 = false;
 		}
-		
-		if (xa != 0 || ya != 0) {
-			move(xa, ya);
-			moving = true;
-		} else {
-			moving = false;
-		}
+
+		move(xMov, yMov);
 
 		if (this.health <= 0) {
 			health = 0;
@@ -464,8 +457,8 @@ public class Player extends Entity {
 	}
 	
 	public void changePlayerLevel(double x, double y) {
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 	}
 
 	public void changeMode(boolean story) {
@@ -603,7 +596,7 @@ public class Player extends Entity {
 
 			double dir = Math.atan2(dy, dx) - Math.toRadians(change);
 
-			shoot((x + 8) + sx, (y + 8) + sy, dir);
+			shoot((xPos + 8) + sx, (yPos + 8) + sy, dir);
 			if (w != Weapon.ROCKET)
 				fireRate = Bullet.fireRate;
 			else
@@ -611,71 +604,79 @@ public class Player extends Entity {
 		}
 	}
 
-	public void move(double xa, double ya) {
-		if (xa != 0 && ya != 0) {
-			move(xa, 0);
-			move(0, ya);
+	public void move() {
+		if (xMov != 0 && yMov != 0) {
+			move(xMov, 0);
+			move(0, yMov);
 			return;
 		}
 
-		if (xa > 0)
+		if (xMov > 0)
 			dir = Direction.RIGHT;
-		if (xa < 0)
+		if (xMov < 0)
 			dir = Direction.LEFT;
-		if (ya > 0)
+		if (yMov > 0)
 			dir = Direction.DOWN;
-		if (ya < 0)
+		if (yMov < 0)
 			dir = Direction.UP;
 
-		if (!collision(xa, ya) || givenControl) {
+		if (!collision(xMov, yMov) || givenControl) {
 			hasControl = true;
 			givenControl = true;
 		}
 
 		if (!hasControl) {
-			while (xa != 0) {
-				this.x += xa;
-				xa = 0;
+			while (xMov != 0) {
+				this.xPos += xMov;
+				xMov = 0;
 			}
 
-			while (ya != 0) {
-				this.y += ya;
-				ya = 0;
+			while (yMov != 0) {
+				this.yPos += yMov;
+				yMov = 0;
 			}
 		} else if (hasControl) {
-			while (xa != 0) {
+			while (xMov != 0) {
 				if (collision(0, 0) & !collision(1, 0))
-					this.x += 0.5;
+					this.xPos += 0.5;
 				if (collision(0, 0) & !collision(-1, 0))
-					this.x -= 0.5;
+					this.xPos -= 0.5;
 				if (collision(0, 0) & !collision(0, 1))
-					this.y += 0.5;
+					this.yPos += 0.5;
 				if (collision(0, 0) & !collision(0, -1))
-					this.y -= 0.5;
-				if (Math.abs(xa) > 1) {
-					if (!collision(Math.abs(xa), ya)) {
-						this.x += xa;
+					this.yPos -= 0.5;
+				if (Math.abs(xMov) > 1) {
+					if (!collision(xMov, yMov)) {
+						this.xPos += xMov;
 					}
-					xa -= Math.abs(xa);
+					if (xMov > 0) {
+						xMov -= Math.abs(xMov);
+					} else {
+						xMov += Math.abs(xMov);
+					}
 				} else {
-					if (!collision(Math.abs(xa), ya)) {
-						this.x += xa;
+					if (!collision(xMov, yMov)) {
+						this.xPos += xMov;
 					}
-					xa = 0;
+					xMov = 0;
 				}
 			}
 
-			while (ya != 0) {
-				if (Math.abs(ya) > 1) {
-					if (!collision(xa, Math.abs(ya))) {
-						this.y += ya;
+			while (yMov != 0) {
+				if (Math.abs(yMov) > 1) {
+					if (!collision(xMov, yMov)) {
+						this.yPos += yMov;
 					}
-					ya -= Math.abs(ya);
+					if (yMov > 0) {
+						yMov -= Math.abs(yMov);
+					} else {
+						yMov += Math.abs(yMov);
+					}
 				} else {
-					if (!collision(xa, Math.abs(ya))) {
-						this.y += ya;
+					if (!collision(xMov, yMov)) {
+						this.yPos += yMov;
 					}
-					ya = 0;
+					yMov = 0;
 				}
 			}
 		}
@@ -685,8 +686,8 @@ public class Player extends Entity {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
 			// Player Specific
-			double xt = ((x + xa) + c % 2 * -6 + 3) / 16;
-			double yt = ((y + ya) + c / 2 * -6 + 3) / 16;
+			double xt = ((xPos + xa) + c % 2 * -6 + 3) / 16;
+			double yt = ((yPos + ya) + c / 2 * -6 + 3) / 16;
 			int ix = (int) Math.ceil(xt);
 			int iy = (int) Math.ceil(yt);
 			if (c % 2 == 0)
@@ -736,6 +737,6 @@ public class Player extends Entity {
 			sprite = anim.getSprite();
 		else
 			sprite = Sprite.pink;
-		screen.renderMob((int) x, (int) y, Sprite.rotate(sprite, pdir), this);
+		screen.renderMob((int) xPos, (int) yPos, Sprite.rotate(sprite, pdir), this);
 	}
 }

@@ -13,10 +13,10 @@ public abstract class Entity {
 		UP, DOWN, LEFT, RIGHT
 	}
 
-	protected Direction dir;
 
 	/// movement
-	protected double x, y;
+	protected Direction dir;
+	protected double xPos, yPos, xMov, yMov;
 	protected double speed = 1;
 	protected boolean moving = false;
 
@@ -33,8 +33,10 @@ public abstract class Entity {
 	protected Level level;
 	protected final Random random = new Random();//Is this necessary?
 	
-	public abstract void tick();
-	
+	public void tick() {
+
+	}
+
 	public abstract void render(Screen screen);
 
 	public void move(double xa, double ya) {}
@@ -53,12 +55,12 @@ public abstract class Entity {
 		return health;
 	}
 	
-	public double getX() {
-		return x;
+	public double getXPosition() {
+		return xPos;
 	}
 	
-	public double getY() {
-		return y;
+	public double getYPosition() {
+		return yPos;
 	}
 	
 	public Sprite getSprite() {
@@ -77,8 +79,8 @@ public abstract class Entity {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
 			//Player Specific
-			double xt = ((x + xa) + c % 2 * -9 + 4) / 16;
-			double yt = ((y + ya) + c / 2 * -1 + 1) / 16;
+			double xt = ((xPos + xa) + c % 2 * -9 + 4) / 16;
+			double yt = ((yPos + ya) + c / 2 * -1 + 1) / 16;
 			int ix = (int) Math.ceil(xt);
 			int iy = (int) Math.ceil(yt);
 			if (c % 2 == 0) ix = (int) Math.floor(xt);

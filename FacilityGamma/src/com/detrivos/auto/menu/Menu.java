@@ -5,7 +5,7 @@ import java.util.Random;
 import com.detrivos.auto.graphics.Screen;
 import com.detrivos.auto.input.Keyboard;
 
-public class Menu {
+public abstract class Menu {
 
 	protected Keyboard key;
 	protected final Random random = new Random();
