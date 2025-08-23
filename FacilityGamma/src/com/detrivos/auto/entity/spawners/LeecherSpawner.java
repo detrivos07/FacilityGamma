@@ -37,7 +37,7 @@ public class LeecherSpawner extends Spawner {
 		List<Player> players = level.getPlayers(this, 7 * 16);
 		if (ents.size() < 7 && players.size() > 0) {
 			if (respawn % 1000 == 0) {
-				level.add(new Leecher((int) (x + xOffset(4)), (int) (y + yOffset(4))));
+				level.add(new Leecher((int) (xPos + xOffset(4)), (int) (yPos + yOffset(4))));
 			}
 		}
 	}

@@ -34,25 +34,25 @@ public class Bullet extends Projectile {
 	}
 
 	public void tick() {
-		if (level.tileCollision((int) (x + nx), (int) (y + ny), 0, 0, 0)) {
+		if (level.tileCollision((int) (xPos + nx), (int) (yPos + ny), 0, 0, 0)) {
 			remove();
 		}
 		move();
 	}
 	
 	protected void move() {
-		x += nx;
-		y += ny;
+		xPos += nx;
+		yPos += ny;
 		if (distance() > range) remove();
 	}
 	
 	protected double distance() {
 		double dist = 0;
-		dist = Math.sqrt(Math.abs((xOrigin - x) * (xOrigin - x) + (yOrigin - y) * (yOrigin - y)));
+		dist = Math.sqrt(Math.abs((xOrigin - xPos) * (xOrigin - xPos) + (yOrigin - yPos) * (yOrigin - yPos)));
 		return dist;
 	}
 	
 	public void render(Screen screen) {
-		screen.renderProjectile((int) x, (int) y, this);
+		screen.renderProjectile((int) xPos, (int) yPos, this);
 	}
 }

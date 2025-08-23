@@ -18,8 +18,8 @@ public abstract class Projectile extends Entity {
 		xOrigin = x;
 		yOrigin = y;
 		angle = dir;
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 	}
 	
 	public Sprite getSprite() {

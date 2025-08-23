@@ -169,17 +169,17 @@ public class Level {
 	
 	public List<Entity> getDrops(Entity e, int radius) {
 		List<Entity> result = new ArrayList<Entity>();
-		int ex = (int) e.getX() + 8;
-		int ey = (int) e.getY() + 8;
+		int ex = (int) e.getXPosition() + 8;
+		int ey = (int) e.getYPosition() + 8;
 		for (int i = 0; i < drops.size(); i++) {
 			Entity entity = drops.get(i);
 			int x , y;
 			if (entity instanceof BulletDrops || entity instanceof Medkit) {
-				x = (int) entity.getX() + 5;
-				y = (int) entity.getY() + 5;
+				x = (int) entity.getXPosition() + 5;
+				y = (int) entity.getYPosition() + 5;
 			} else {
-				x = (int) entity.getX();
-				y = (int) entity.getY();
+				x = (int) entity.getXPosition();
+				y = (int) entity.getYPosition();
 			}
 			
 			int dx = Math.abs(x - ex);
@@ -195,30 +195,30 @@ public class Level {
 		List<Entity> result = new ArrayList<Entity>();
 		int ex, ey;
 		if (e instanceof Landmine) {
-			ex = (int) e.getX() + 4;
-			ey = (int) e.getY() + 4;
+			ex = (int) e.getXPosition() + 4;
+			ey = (int) e.getYPosition() + 4;
 		} else {
-			ex = (int) e.getX() + 8;
-			ey = (int) e.getY() + 8;
+			ex = (int) e.getXPosition() + 8;
+			ey = (int) e.getYPosition() + 8;
 		}
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = entities.get(i);
 			int x , y;
 			if (entity instanceof Leecher) {
-				x = (int) entity.getX() + 8;
-				y = (int) entity.getY() + 8;
+				x = (int) entity.getXPosition() + 8;
+				y = (int) entity.getYPosition() + 8;
 			} else if (entity instanceof Landmine) {
-				x = (int) entity.getX() + 4;
-				y = (int) entity.getY() + 4;
+				x = (int) entity.getXPosition() + 4;
+				y = (int) entity.getYPosition() + 4;
 			} else if (entity instanceof Note) {
-				x = (int) entity.getX() + 5;
-				y = (int) entity.getY() + 5;
+				x = (int) entity.getXPosition() + 5;
+				y = (int) entity.getYPosition() + 5;
 			} else if (entity instanceof BulletDrops) {
-				x = (int) entity.getX() + 5;
-				y = (int) entity.getY() + 5;
+				x = (int) entity.getXPosition() + 5;
+				y = (int) entity.getYPosition() + 5;
 			} else {
-				x = (int) entity.getX();
-				y = (int) entity.getY();
+				x = (int) entity.getXPosition();
+				y = (int) entity.getYPosition();
 			}
 			
 			int dx = Math.abs(x - ex);
@@ -234,24 +234,24 @@ public class Level {
 		List<Projectile> result = new ArrayList<Projectile>();
 		int ex, ey;
 		if (e instanceof Landmine) {
-			ex = (int) e.getX() + 4;
-			ey = (int) e.getY() + 4;
+			ex = (int) e.getXPosition() + 4;
+			ey = (int) e.getYPosition() + 4;
 		} else if (e instanceof CryoPod) {
-			ex = (int) e.getX() + 13;
-			ey = (int) e.getY() + 13;
+			ex = (int) e.getXPosition() + 13;
+			ey = (int) e.getYPosition() + 13;
 		} else {
-			ex = (int) e.getX() + 8;
-			ey = (int) e.getY() + 8;
+			ex = (int) e.getXPosition() + 8;
+			ey = (int) e.getYPosition() + 8;
 		}
 		for (int i = 0; i < projectiles.size(); i++) {
 			Projectile p = projectiles.get(i);
 			int x, y;
 			if (p instanceof Rocket) {
-				x = (int) (p.getX() + 2.5);
-				y = (int) (p.getY() + 2.5);
+				x = (int) (p.getXPosition() + 2.5);
+				y = (int) (p.getYPosition() + 2.5);
 			} else {
-				x = (int) p.getX();
-				y = (int) p.getY();
+				x = (int) p.getXPosition();
+				y = (int) p.getYPosition();
 			}
 			
 			int dx = Math.abs(x - ex);
@@ -267,22 +267,22 @@ public class Level {
 		List<Player> result = new ArrayList<Player>();
 		int ex, ey;
 		if (e instanceof ShotgunNPC) {
-			ex = (int) e.getX() + 13;
-			ey = (int) e.getY() + 13;
+			ex = (int) e.getXPosition() + 13;
+			ey = (int) e.getYPosition() + 13;
 		} else if (e instanceof Landmine) {
-			ex = (int) e.getX() + 4;
-			ey = (int) e.getY() + 4;
+			ex = (int) e.getXPosition() + 4;
+			ey = (int) e.getYPosition() + 4;
 		} else if (e instanceof Door) {
-			ex = (int) e.getX() + 16;
-			ey = (int) e.getY() + 16;
+			ex = (int) e.getXPosition() + 16;
+			ey = (int) e.getYPosition() + 16;
 		} else {
-			ex = (int) e.getX() + 8;
-			ey = (int) e.getY() + 8;
+			ex = (int) e.getXPosition() + 8;
+			ey = (int) e.getYPosition() + 8;
 		}
 		for (int i = 0; i < players.size(); i++) {
 			Player player = players.get(i);
-			int x = (int) player.getX() + 8;
-			int y = (int) player.getY() + 8;
+			int x = (int) player.getXPosition() + 8;
+			int y = (int) player.getYPosition() + 8;
 			
 			int dx = Math.abs(x - ex);
 			int dy = Math.abs(y - ey);

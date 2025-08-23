@@ -25,8 +25,8 @@ public class Landmine extends Entity {
 	private AnimatedSprite anim = new AnimatedSprite(SpriteSheet.kaboom, 16, 16, 8);
 
 	public Landmine(int x, int y, boolean grass) {
-		this.x = lx = (x << 4) + editX;
-		this.y = ly = (y << 4) + editY;
+		this.xPos = lx = (x << 4) + editX;
+		this.yPos = ly = (y << 4) + editY;
 		if (grass) sprite = Sprite.landmineGrass;
 		else sprite = Sprite.landmineDirt;
 	}
@@ -40,8 +40,8 @@ public class Landmine extends Entity {
 		}
 		
 		if (exploded) {
-			this.x = lx - 4;
-			this.y = ly - 4;
+			this.xPos = lx - 4;
+			this.yPos = ly - 4;
 			if (!soundCreated) {
 				SoundClip.play(explode, -15.0f);
 				soundCreated = true;
@@ -54,6 +54,6 @@ public class Landmine extends Entity {
 
 	public void render(Screen screen) {
 		if (exploded) sprite = anim.getSprite();
-		screen.renderMob((int) x, (int) y, sprite, this);
+		screen.renderMob((int) xPos, (int) yPos, sprite, this);
 	}
 }

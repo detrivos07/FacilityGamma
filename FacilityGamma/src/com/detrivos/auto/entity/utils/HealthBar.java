@@ -13,8 +13,8 @@ public class HealthBar extends Entity {
 	public int col = 0xFF00FF00;	
 
 	public HealthBar(Entity m, int oX, int oY) {
-		this.x = (oX - 1);
-		this.y = (oY - 2);
+		this.xPos = (oX - 1);
+		this.yPos = (oY - 2);
 		this.m = m;
 		this.health = m.getHealth();
 	}
@@ -42,10 +42,10 @@ public class HealthBar extends Entity {
 	}
 	
 	private void changePos() {
-		this.x = (int) m.getX() - 1;
-		this.y = (int) m.getY() - 2;
+		this.xPos = (int) m.getXPosition() - 1;
+		this.yPos = (int) m.getYPosition() - 2;
 	}
 	public void render(Screen screen) {
-		if (m.health != health) screen.renderHealthBar((int) x, (int) y, this);
+		if (m.health != health) screen.renderHealthBar((int) xPos, (int) yPos, this);
 	}
 }

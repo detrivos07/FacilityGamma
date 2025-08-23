@@ -56,19 +56,19 @@ public class TurretSpawner extends Spawner {
 
 	private void spawn() {
 		for (int i = 0; i < Game.chal.dif; i++) {
-			if (Game.chal.dif < 2) level.add(new Turret((int) (this.x / 16) + xOffset(5), (int) (this.y / 16) + yOffset(5), Turret.Type.NORMAL));
-			else if (random.nextInt(2) == 0) level.add(new Turret((int) (this.x / 16) + xOffset(5), (int) (this.y / 16) + yOffset(5), Turret.Type.NORMAL));
+			if (Game.chal.dif < 2) level.add(new Turret((int) (this.xPos / 16) + xOffset(5), (int) (this.yPos / 16) + yOffset(5), Turret.Type.NORMAL));
+			else if (random.nextInt(2) == 0) level.add(new Turret((int) (this.xPos / 16) + xOffset(5), (int) (this.yPos / 16) + yOffset(5), Turret.Type.NORMAL));
 			int mc = 0;
 			if (Game.chal.dif < 10) mc = (int) (11 - Game.chal.dif);
 			else mc = 1;
 			if (random.nextInt(mc) == 0) {
-				level.add(new Turret((int) (this.x / 16) + xOffset(5), (int) (this.y / 16) + yOffset(5), Turret.Type.MACHINE));
+				level.add(new Turret((int) (this.xPos / 16) + xOffset(5), (int) (this.yPos / 16) + yOffset(5), Turret.Type.MACHINE));
 			}
 			int rc = 0;
 			if (Game.chal.dif < 20) rc = (int) (21 - Game.chal.dif);
 			else rc = 1;
 			if (random.nextInt(rc) == 0) {
-				level.add(new Turret((int) (this.x / 16) + xOffset(5), (int) (this.y / 16) + yOffset(5), Turret.Type.ROCKET));
+				level.add(new Turret((int) (this.xPos / 16) + xOffset(5), (int) (this.yPos / 16) + yOffset(5), Turret.Type.ROCKET));
 			}
 		}
 	}

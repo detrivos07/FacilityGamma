@@ -38,7 +38,7 @@ public class Rocket extends Projectile {
 	}
 
 	public void tick() {
-		if (level.tileCollision((int) (x + nx), (int) (y + ny), 0, 0, 0)) {
+		if (level.tileCollision((int) (xPos + nx), (int) (yPos + ny), 0, 0, 0)) {
 			exploded = true;
 			if (anim.getFrame() >= 7) {
 				remove();
@@ -58,8 +58,8 @@ public class Rocket extends Projectile {
 	}
 	
 	protected void move() {
-		x += nx;
-		y += ny;
+		xPos += nx;
+		yPos += ny;
 		if (distance() > range) {
 			exploded = true;
 		}
@@ -67,15 +67,15 @@ public class Rocket extends Projectile {
 	
 	protected double distance() {
 		double dist = 0;
-		dist = Math.sqrt(Math.abs((xOrigin - x) * (xOrigin - x) + (yOrigin - y) * (yOrigin - y)));
+		dist = Math.sqrt(Math.abs((xOrigin - xPos) * (xOrigin - xPos) + (yOrigin - yPos) * (yOrigin - yPos)));
 		return dist;
 	}
 	
 	public void render(Screen screen) {
-		if (!exploded) screen.renderProjectile((int) x, (int) y, this);
+		if (!exploded) screen.renderProjectile((int) xPos, (int) yPos, this);
 		else if (exploded) {
 			sprite = anim.getSprite();
-			screen.renderMob((int) x - 8, (int) y - 8, sprite);
+			screen.renderMob((int) xPos - 8, (int) yPos - 8, sprite);
 		}
 	}
 }

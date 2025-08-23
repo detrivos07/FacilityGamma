@@ -55,8 +55,8 @@ public class Turret extends Entity {
 	private AnimatedSprite anim = new AnimatedSprite(SpriteSheet.kaboom, 16, 16, 8);
 	
 	public Turret(int x, int y, Type t) {
-		this.x = x << 4;
-		this.y = y << 4;
+		this.xPos = x << 4;
+		this.yPos = y << 4;
 		this.t = t;
 		setProperType();
 		rotSpeed = orotSpeed;
@@ -65,7 +65,7 @@ public class Turret extends Entity {
 	
 	public void tick() {
 		if (level != null && !this.barAdd) {
-			bar = new HealthBar(this, (int) this.x, (int) this.y);
+			bar = new HealthBar(this, (int) this.xPos, (int) this.yPos);
 			level.add(bar);
 			this.barAdd = true;
 		}
@@ -88,16 +88,16 @@ public class Turret extends Entity {
 		if (dead) {
 			if (!bulletDropped) {
 				if (t == Type.NORMAL) {
-					level.add(new BulletDrops(this.x, this.y, BType.PISTOL, 13));
-					if (Game.onchal && random.nextInt(7) == 0) level.add(new Medkit((int) this.x / 16, (int) this.y / 16, Tier.LOW)); 
+					level.add(new BulletDrops(this.xPos, this.yPos, BType.PISTOL, 13));
+					if (Game.onchal && random.nextInt(7) == 0) level.add(new Medkit((int) this.xPos / 16, (int) this.yPos / 16, Tier.LOW));
 				}
 				if (t == Type.MACHINE) {
-					level.add(new BulletDrops(this.x, this.y, BType.MACHINE, 25));
-					if (Game.onchal && random.nextInt(9) == 0) level.add(new Medkit((int) this.x / 16, (int) this.y / 16, Tier.MID)); 
+					level.add(new BulletDrops(this.xPos, this.yPos, BType.MACHINE, 25));
+					if (Game.onchal && random.nextInt(9) == 0) level.add(new Medkit((int) this.xPos / 16, (int) this.yPos / 16, Tier.MID));
 				}
 				if (t == Type.ROCKET) {
-					level.add(new BulletDrops(this.x, this.y, BType.ROCKET, 2));
-					if (Game.onchal && random.nextInt(2) == 0) level.add(new Medkit((int) this.x / 16, (int) this.y / 16, Tier.HIGH)); 
+					level.add(new BulletDrops(this.xPos, this.yPos, BType.ROCKET, 2));
+					if (Game.onchal && random.nextInt(2) == 0) level.add(new Medkit((int) this.xPos / 16, (int) this.yPos / 16, Tier.HIGH));
 				}
 				if (Game.onchal) Player.kills++;
 				bulletDropped = true;
@@ -114,11 +114,11 @@ public class Turret extends Entity {
 		if (players.size() > 0 && !l) {
 			Player player = players.get(0);
 			if (t != Type.ROCKET) {
-				dx = player.getX() - (this.x + rand());
-				dy = player.getY() - (this.y + rand());
+				dx = player.getXPosition() - (this.xPos + rand());
+				dy = player.getYPosition() - (this.yPos + rand());
 			} else {
-				dx = player.getX() - this.x;
-				dy = player.getY() - this.y;
+				dx = player.getXPosition() - this.xPos;
+				dy = player.getYPosition() - this.yPos;
 			}
 			if ((int) Math.toDegrees(Math.atan2(dy, dx)) != rot && !locked) {
 				if (((int) Math.toDegrees(Math.atan2(dy, dx)) >= 0 && rot >= 0) || ((int) Math.toDegrees(Math.atan2(dy, dx)) <= 0 && rot <= 0)) {
@@ -182,11 +182,11 @@ public class Turret extends Entity {
 				if (e instanceof Leecher) {
 					l = true;
 					if (t != Type.ROCKET) {
-						dx = e.getX() - (this.x + rand());
-						dy = e.getY() - (this.y + rand());
+						dx = e.getXPosition() - (this.xPos + rand());
+						dy = e.getYPosition() - (this.yPos + rand());
 					} else {
-						dx = e.getX() - this.x;
-						dy = e.getY() - this.y;
+						dx = e.getXPosition() - this.xPos;
+						dy = e.getYPosition() - this.yPos;
 					}
 					
 					if ((int) Math.toDegrees(Math.atan2(dy, dx)) != rot && !locked) {
@@ -301,7 +301,7 @@ public class Turret extends Entity {
 	
 	private void shooting() {
 		if (fireRate <= 0) {
-			shoot(x + 8, y + 8, dir);
+			shoot(xPos + 8, yPos + 8, dir);
 			if (t != Type.ROCKET) fireRate = Bullet.fireRate;
 			else fireRate = Rocket.fireRate;
 		}
@@ -320,6 +320,6 @@ public class Turret extends Entity {
 
 	public void render(Screen screen) {
 		if (dead) sprite = anim.getSprite();
-		screen.renderMob((int) x, (int) y, Sprite.rotate(sprite, angle), this);
+		screen.renderMob((int) xPos, (int) yPos, Sprite.rotate(sprite, angle), this);
 	}
 }

@@ -19,8 +19,8 @@ public class Door extends Entity {
 	private AnimatedSprite anim = or;
 	
 	public Door(int x, int y, boolean unlocked) {
-		this.x = x - 16;
-		this.y = y - 16;
+		this.xPos = x - 16;
+		this.yPos = y - 16;
 		this.unlocked = unlocked;
 		sprite = Sprite.door;
 	}
@@ -29,7 +29,7 @@ public class Door extends Entity {
 		List<Player> players = level.getPlayers(this, 40);
 		if (players.size() > 0 && unlocked) {
 			Player p = players.get(0);
-			if (p.getX() < this.x + 8) {
+			if (p.getXPosition() < this.xPos + 8) {
 				anim = or;
 			}
 			
@@ -47,6 +47,6 @@ public class Door extends Entity {
 	public void render(Screen screen) {
 		if (anim != null) sprite = anim.getSprite();
 		else sprite = Sprite.door;
-		screen.renderMob((int) x, (int) y, sprite, this);
+		screen.renderMob((int) xPos, (int) yPos, sprite, this);
 	}
 }

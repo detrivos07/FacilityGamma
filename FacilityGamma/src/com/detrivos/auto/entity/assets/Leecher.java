@@ -25,8 +25,8 @@ public class Leecher extends Entity {
 	private double oSpeed = 1.4;
 
 	public Leecher(int x, int y) {
-		this.x = x << 4;
-		this.y = y << 4;
+		this.xPos = x << 4;
+		this.yPos = y << 4;
 		this.health = 100;
 		speed = oSpeed;
 		sprite = Sprite.leecher; 
@@ -37,7 +37,7 @@ public class Leecher extends Entity {
 	
 	public void tick() {
 		if (level != null && !this.barAdd) {
-			bar = new HealthBar(this, (int) this.x, (int) this.y);
+			bar = new HealthBar(this, (int) this.xPos, (int) this.yPos);
 			level.add(bar);
 			this.barAdd = true;
 		}
@@ -45,14 +45,13 @@ public class Leecher extends Entity {
 			bar.remove();
 			remove();
 		}
-		double xa = 0, ya = 0;
 		
 		List<Player> players = level.getPlayers(this, 10 * 16);
 		if (players.size() > 0) {
 			Player player = players.get(0);
 			if (!player.box) {
-				dx = player.getX() - this.x;
-				dy = player.getY() - this.y;
+				dx = player.getXPosition() - this.xPos;
+				dy = player.getYPosition() - this.yPos;
 				if ((int) Math.toDegrees(Math.atan2(dy, dx)) != rot && !locked) {
 					if (((int) Math.toDegrees(Math.atan2(dy, dx)) >= 0 && rot >= 0) || ((int) Math.toDegrees(Math.atan2(dy, dx)) <= 0 && rot <= 0)) {
 						if ((int) Math.toDegrees(Math.atan2(dy, dx)) > rot &&  (int) Math.toDegrees(Math.atan2(dy, dx)) - rot < rotSpeed) rotSpeed = (int) Math.toDegrees(Math.atan2(dy, dx)) - rot;
@@ -74,25 +73,25 @@ public class Leecher extends Entity {
 				} else {
 					angle = Math.atan2(dy, dx);
 					rot = (int) Math.toDegrees(Math.atan2(dy, dx));
-					if (x < player.getX() && player.getX() - x < oSpeed) speed = player.getX() - x;
+					if (xPos < player.getXPosition() && player.getXPosition() - xPos < oSpeed) speed = player.getXPosition() - xPos;
 					else speed = oSpeed;
-					if (x < player.getX()) xa += speed;
+					if (xPos < player.getXPosition()) xMov += speed;
 					
-					if (x > player.getX() && x - player.getX() < oSpeed) speed = x - player.getX();
+					if (xPos > player.getXPosition() && xPos - player.getXPosition() < oSpeed) speed = xPos - player.getXPosition();
 					else speed = oSpeed;
-					if (x > player.getX()) xa -= speed;
+					if (xPos > player.getXPosition()) xMov -= speed;
 					
-					if (y < player.getY() && player.getY() - y < oSpeed) speed = player.getY() - y;
+					if (yPos < player.getYPosition() && player.getYPosition() - yPos < oSpeed) speed = player.getYPosition() - yPos;
 					else speed = oSpeed;
-					if (y < player.getY()) ya += speed;
+					if (yPos < player.getYPosition()) yMov += speed;
 					
-					if (y > player.getY() && y - player.getY() < oSpeed) speed = y - player.getY();
+					if (yPos > player.getYPosition() && yPos - player.getYPosition() < oSpeed) speed = yPos - player.getYPosition();
 					else speed = oSpeed;
-					if (y > player.getY()) ya -= speed;
+					if (yPos > player.getYPosition()) yMov -= speed;
 					locked = true;
 					
-					if (collision(0, ya) && !posx && !negx) {
-						if (player.getX() < this.x) {
+					if (collision(0, yMov) && !posx && !negx) {
+						if (player.getXPosition() < this.xPos) {
 							posx = true;
 							negx = false;
 						} else {
@@ -101,8 +100,8 @@ public class Leecher extends Entity {
 						}
 					}
 					
-					if (collision(xa, 0) && !posy && !negy) {
-						if (player.getY() < this.y) {
+					if (collision(xMov, 0) && !posy && !negy) {
+						if (player.getYPosition() < this.yPos) {
 							posy = true;
 							negy = false;
 						} else {
@@ -112,34 +111,34 @@ public class Leecher extends Entity {
 					}
 				}
 			} else {
-				xa = 0;
-				ya = 0;
+				xMov = 0;
+				yMov = 0;
 			}
 		} else {
 			locked = false;
 		}
 		
 		if (posx) {
-			xa += speed;
-			if (!collision(0, ya)) {
+			xMov += speed;
+			if (!collision(0, yMov)) {
 				posx = false;
 			}
 		}
 		if (negx) {
-			xa -= speed;
-			if (!collision(0, ya)) {
+			xMov -= speed;
+			if (!collision(0, yMov)) {
 				negx = false;
 			}
 		}
 		if (posy) {
-			ya += speed;
-			if (!collision(xa, 0)) {
+			yMov += speed;
+			if (!collision(xMov, 0)) {
 				posy = false;
 			}
 		}
 		if (negy) {
-			ya -= speed;
-			if (!collision(xa, 0)) {
+			yMov -= speed;
+			if (!collision(xMov, 0)) {
 				negy = false;
 			}
 		}
@@ -157,78 +156,76 @@ public class Leecher extends Entity {
 		if (ents.size() > 0) {
 			for (int i = 0; i < ents.size(); i++) {
 				Entity e = ents.get(i);
-				if (x < e.getX()) xa -= speed;
-				if (x > e.getX()) xa += speed;
-				if (y < e.getY()) ya -= speed;
-				if (y > e.getY()) ya += speed;
+				if (xPos < e.getXPosition()) xMov -= speed;
+				if (xPos > e.getXPosition()) xMov += speed;
+				if (yPos < e.getYPosition()) yMov -= speed;
+				if (yPos > e.getYPosition()) yMov += speed;
 			}
 		}
 		
-		if (ya < 0) {
+		if (yMov < 0) {
 			dir = Direction.UP;
-		} else if (ya > 0) {
+		} else if (yMov > 0) {
 			dir = Direction.DOWN;
 		}
-		if (xa < 0) {
+		if (xMov < 0) {
 			dir = Direction.LEFT;
-		} else if (xa > 0) {
+		} else if (xMov > 0) {
 			dir = Direction.RIGHT;
 		}
 		
-		if (xa != 0 || ya != 0) {
-			move(xa, ya);
-		}
+		move();
 	}
 	
-	public void move(double xa, double ya) {
-		if (xa != 0 && ya != 0) {
-			move(xa, 0);
-			move(0, ya);
+	public void move() {
+		if (xMov != 0 && yMov != 0) {
+			move(xMov, 0);
+			move(0, yMov);
 			return;
 		}
 		
-		if (xa > 0) dir = Direction.RIGHT;
-		if (xa < 0) dir = Direction.LEFT;
-		if (ya > 0) dir = Direction.DOWN;
-		if (ya < 0) dir = Direction.UP;
+		if (xMov > 0) dir = Direction.RIGHT;
+		if (xMov < 0) dir = Direction.LEFT;
+		if (yMov > 0) dir = Direction.DOWN;
+		if (yMov < 0) dir = Direction.UP;
 		
-		while (xa != 0) {
-			if (collision(0, 0) & !collision(1, 0)) this.x += 0.5;
-			if (collision(0, 0) & !collision(-1, 0)) this.x -= 0.5;
-			if (collision(0, 0) & !collision(0, 1)) this.y += 0.5;
-			if (collision(0, 0) & !collision(0, -1)) this.y -= 0.5;
-			if (Math.abs(xa) > 1) {
-				if (!collision(xa, ya)) {
-					this.x += xa;
+		while (xMov != 0) {
+			if (collision(0, 0) & !collision(1, 0)) this.xPos += 0.5;
+			if (collision(0, 0) & !collision(-1, 0)) this.xPos -= 0.5;
+			if (collision(0, 0) & !collision(0, 1)) this.yPos += 0.5;
+			if (collision(0, 0) & !collision(0, -1)) this.yPos -= 0.5;
+			if (Math.abs(xMov) > 1) {
+				if (!collision(xMov, yMov)) {
+					this.xPos += xMov;
 				}
-				if (xa > 0) {
-					xa -= Math.abs(xa);
+				if (xMov > 0) {
+					xMov -= Math.abs(xMov);
 				} else {
-					xa += Math.abs(xa);
+					xMov += Math.abs(xMov);
 				}
 			} else {
-				if (!collision(xa, ya)) {
-					this.x += xa;
+				if (!collision(xMov, yMov)) {
+					this.xPos += xMov;
 				}
-				xa = 0;
+				xMov = 0;
 			}
 		}
 
-		while (ya != 0) {
-			if (Math.abs(ya) > 1) {
-				if (!collision(xa, ya)) {
-					this.y += ya;
+		while (yMov != 0) {
+			if (Math.abs(yMov) > 1) {
+				if (!collision(xMov, yMov)) {
+					this.yPos += yMov;
 				}
-				if (ya > 0) {
-					ya -= Math.abs(ya);
+				if (yMov > 0) {
+					yMov -= Math.abs(yMov);
 				} else {
-					ya += Math.abs(ya);
+					yMov += Math.abs(yMov);
 				}
 			} else {
-				if (!collision(xa, ya)) {
-					this.y += ya;
+				if (!collision(xMov, yMov)) {
+					this.yPos += yMov;
 				}
-				ya = 0;
+				yMov = 0;
 			}
 		}
 	}
@@ -248,6 +245,6 @@ public class Leecher extends Entity {
 	}*/
 
 	public void render(Screen screen) {
-		screen.renderMob((int) x, (int) y, Sprite.rotate(sprite, angle), this);
+		screen.renderMob((int) xPos, (int) yPos, Sprite.rotate(sprite, angle), this);
 	}
 }

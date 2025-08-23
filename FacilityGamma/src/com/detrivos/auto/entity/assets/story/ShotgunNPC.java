@@ -15,8 +15,8 @@ public class ShotgunNPC extends Entity {
 	private boolean given = false;
 	
 	public ShotgunNPC(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 		sprite = Sprite.shotgunNPC;
 	}
 	
@@ -35,9 +35,9 @@ public class ShotgunNPC extends Entity {
 	}
 	
 	public void render(Screen screen) {
-		screen.renderMob((int) x - 4, (int) y - 9, sprite, this);
+		screen.renderMob((int) xPos - 4, (int) yPos - 9, sprite, this);
 		if (collided) {
-			screen.renderStoryUI((int) x - 60, (int) y - 95, ui, true);
+			screen.renderStoryUI((int) xPos - 60, (int) yPos - 95, ui, true);
 		}
 	}
 }

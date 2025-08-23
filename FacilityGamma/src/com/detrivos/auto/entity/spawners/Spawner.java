@@ -15,8 +15,8 @@ public abstract class Spawner extends Entity {
 	
 	public Spawner(int x, int y, Type t, int amount, Level level) {
 		init(level);
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 		this.t = t;
 	}
 	

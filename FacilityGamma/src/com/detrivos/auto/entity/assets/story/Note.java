@@ -14,8 +14,8 @@ public class Note extends Entity {
 	
 	public Note(int x, int y, Type t, Sprite sprite) {
 		this.t = t;
-		this.x = x;
-		this.y = y;
+		this.xPos = x;
+		this.yPos = y;
 		this.sprite = sprite;
 	}
 	
@@ -23,6 +23,6 @@ public class Note extends Entity {
 	}
 
 	public void render(Screen screen) {
-		screen.renderMob((int) x, (int) y, sprite, this);
+		screen.renderMob((int) xPos, (int) yPos, sprite, this);
 	}
 }

@@ -19,8 +19,8 @@ public class CryoPod extends Entity {
 		if (player) anim = emerge;
 		else s = sprite;
 		this.player = player;
-		this.x = x - 13;
-		this.y = y - 13;
+		this.xPos = x - 13;
+		this.yPos = y - 13;
 	}
 	
 	public void tick() {
@@ -45,6 +45,6 @@ public class CryoPod extends Entity {
 		} else if (!player) {
 			sprite = s;
 		}
-		screen.renderMob((int) x, (int) y, sprite, this);
+		screen.renderMob((int) xPos, (int) yPos, sprite, this);
 	}
 }
