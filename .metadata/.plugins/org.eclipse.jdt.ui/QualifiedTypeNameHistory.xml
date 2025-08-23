@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.detrivos.auto.entity.assets.Player"/>
+    <fullyQualifiedTypeName name="com.detrivos.auto.Game"/>
+    <fullyQualifiedTypeName name="com.detrivos.auto.entity.assets.Turret.Type"/>
+    <fullyQualifiedTypeName name="com.detrivos.auto.experience.Experience"/>
+    <fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
+    <fullyQualifiedTypeName name="com.detrivos.auto.menu.ExpMenu"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,70 @@
+package com.detrivos.auto.menu;
+
+import com.detrivos.auto.Game;
+import com.detrivos.auto.graphics.Screen;
+import com.detrivos.auto.input.Keyboard;
+
+public class RespawnMenu extends Menu {
+
+	int timer = 18;
+	String[] options = { "Respawn", "Main Menu" };
+	int selected = 0;
+
+	int cola = 0xFFFFFFFF;
+	int colb = 0xFFFFFFFF;
+
+	public RespawnMenu(Keyboard key, boolean chal) {
+		super(key);
+		if (chal)
+			options[0] = "Retry";
+	}
+
+	public void tick() {
+		if (timer > 0)
+			timer--;
+		if ((key.right || key.up) && selected < options.length && timer == 0) {
+			selected++;
+			timer = 10;
+		}
+		if ((key.left || key.down) && selected > -1 && timer == 0) {
+			selected--;
+			timer = 10;
+		}
+
+		if (selected < 0)
+			selected = 1;
+		if (selected > 1)
+			selected = 0;
+
+		if (selected == 0) {
+			cola = 0xFFFFE877;
+			if (key.select) {
+				Game.doRespawn = true;
+			}
+		} else {
+			cola = 0xFFFFFFFF;
+		}
+
+		if (selected == 1) {
+			colb = 0xFFFFE877;
+			if (key.select) {
+				Game.toMainMenu = true;
+			}
+		} else {
+			colb = 0xFFFFFFFF;
+		}
+	}
+
+	public void render(Screen screen) {
+		for (int i = 0; i < options.length; i++) {
+			if (i == 0) {
+				screen.renderText(options[i], (Game.absWidth / 4) + 2, 400 + 2, 28, 0, 0xFF000000);
+				screen.renderText(options[i], (Game.absWidth / 4), 400, 28, 0, cola);
+			}
+			if (i == 1) {
+				screen.renderText(options[i], (Game.absWidth / 4) * 3 + 2, 400 + 2, 28, 0, 0xFF000000);
+				screen.renderText(options[i], (Game.absWidth / 4) * 3, 400, 28, 0, colb);
+			}
+		}
+	}
+}

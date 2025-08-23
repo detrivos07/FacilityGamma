@@ -1,0 +1,26 @@
+package com.detrivos.auto.experience;
+
+public class Experience {
+	
+	boolean converted = false;
+	
+	private int expAmount;
+	
+	private int[] turretBaseTable = {1, 2, 4};
+	private int[] turretConvTable = new int[3];
+
+	public Experience() {
+		this.expAmount = 0;
+	}
+	
+	public void convertTables(long dif) {
+		if (dif % 2 == 0 && !converted) {
+			converted = true;
+			for (int i = 0; i < 3; i++) {
+				turretConvTable[i] = (int) Math.ceil(turretBaseTable[i] * 1.5);
+				System.out.println(turretConvTable[i]);
+			}
+		}
+		if (dif % 2 != 0) converted = false;
+	}
+}

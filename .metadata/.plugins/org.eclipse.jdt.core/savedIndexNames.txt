@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+E:\Backup 31521\Old Projects\FacilityGamma\.metadata\.plugins\org.eclipse.jdt.core
+3448349646.index
+340261788.index

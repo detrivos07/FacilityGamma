@@ -1,0 +1,12 @@
+package com.detrivos.auto.experience;
+
+public class Experience {
+	
+	private int expAmount;
+
+	public Experience() {
+		this.expAmount = 0;
+	}
+	
+	
+}
