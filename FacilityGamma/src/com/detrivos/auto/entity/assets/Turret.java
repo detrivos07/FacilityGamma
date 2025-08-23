@@ -5,7 +5,6 @@ import java.util.List;
 import com.detrivos.auto.Game;
 import com.detrivos.auto.audio.SoundClip;
 import com.detrivos.auto.entity.Entity;
-import com.detrivos.auto.entity.Mob;
 import com.detrivos.auto.entity.assets.drops.BulletDrops;
 import com.detrivos.auto.entity.assets.drops.BulletDrops.BType;
 import com.detrivos.auto.entity.assets.drops.Medkit;
@@ -20,7 +19,7 @@ import com.detrivos.auto.projectile.Bullet;
 import com.detrivos.auto.projectile.Projectile;
 import com.detrivos.auto.projectile.Rocket;
 
-public class Turret extends Mob {
+public class Turret extends Entity {
 
 	private int rot = 0;
 	private int posneg = 1;

@@ -5,7 +5,6 @@ import java.util.List;
 import com.detrivos.auto.Game;
 import com.detrivos.auto.audio.SoundClip;
 import com.detrivos.auto.entity.Entity;
-import com.detrivos.auto.entity.Mob;
 import com.detrivos.auto.entity.assets.drops.BulletDrops;
 import com.detrivos.auto.entity.assets.drops.BulletDrops.BType;
 import com.detrivos.auto.entity.assets.drops.Medkit;
@@ -32,7 +31,7 @@ import com.detrivos.auto.projectile.Projectile;
 import com.detrivos.auto.projectile.Rocket;
 import com.detrivos.auto.ui.StoryUI;
 
-public class Player extends Mob {
+public class Player extends Entity {
 
 	public enum Weapon {
 		PISTOL, MACHINE, SCATTER, ROCKET
@@ -279,8 +278,6 @@ public class Player extends Mob {
 		}
 
 		if (collision(4, 0) || collision(0, 4) || collision(-14, 0) || collision(0, -14)) {
-			System.out.println(level.getTile((int) (ox), (int) (oy)).hasGun());
-			System.out.println(level.getTile((int) (ox), (int) (oy)).hasClothes());
 			if (level.getTile((int) (ox), (int) (oy)).hasGun()) {
 				if (isClothed)
 					animNum = 3;
@@ -656,12 +653,12 @@ public class Player extends Mob {
 				if (collision(0, 0) & !collision(0, -1))
 					this.y -= 0.5;
 				if (Math.abs(xa) > 1) {
-					if (!collision(abs(xa), ya)) {
+					if (!collision(Math.abs(xa), ya)) {
 						this.x += xa;
 					}
-					xa -= abs(xa);
+					xa -= Math.abs(xa);
 				} else {
-					if (!collision(abs(xa), ya)) {
+					if (!collision(Math.abs(xa), ya)) {
 						this.x += xa;
 					}
 					xa = 0;
@@ -670,12 +667,12 @@ public class Player extends Mob {
 
 			while (ya != 0) {
 				if (Math.abs(ya) > 1) {
-					if (!collision(xa, abs(ya))) {
+					if (!collision(xa, Math.abs(ya))) {
 						this.y += ya;
 					}
-					ya -= abs(ya);
+					ya -= Math.abs(ya);
 				} else {
-					if (!collision(xa, abs(ya))) {
+					if (!collision(xa, Math.abs(ya))) {
 						this.y += ya;
 					}
 					ya = 0;

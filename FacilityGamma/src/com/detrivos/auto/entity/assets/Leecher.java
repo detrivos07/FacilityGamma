@@ -3,13 +3,12 @@ package com.detrivos.auto.entity.assets;
 import java.util.List;
 
 import com.detrivos.auto.entity.Entity;
-import com.detrivos.auto.entity.Mob;
 import com.detrivos.auto.entity.utils.HealthBar;
 import com.detrivos.auto.graphics.Screen;
 import com.detrivos.auto.graphics.Sprite;
 import com.detrivos.auto.projectile.Projectile;
 
-public class Leecher extends Mob {
+public class Leecher extends Entity {
 	
 	private int rot = 0;
 	private int rotSpeed = 2;
@@ -199,12 +198,12 @@ public class Leecher extends Mob {
 			if (collision(0, 0) & !collision(0, 1)) this.y += 0.5;
 			if (collision(0, 0) & !collision(0, -1)) this.y -= 0.5;
 			if (Math.abs(xa) > 1) {
-				if (!collision(abs(xa), ya)) {
+				if (!collision(Math.abs(xa), ya)) {
 					this.x += xa;
 				}
-				xa -= abs(xa);
+				xa -= Math.abs(xa);
 			} else {
-				if (!collision(abs(xa), ya)) {
+				if (!collision(Math.abs(xa), ya)) {
 					this.x += xa;
 				}
 				xa = 0;
@@ -213,12 +212,12 @@ public class Leecher extends Mob {
 		
 		while (ya != 0) {
 			if (Math.abs(ya) > 1) {
-				if (!collision(xa, abs(ya))) {
+				if (!collision(xa, Math.abs(ya))) {
 					this.y += ya;
 				}
-				ya -= abs(ya);
+				ya -= Math.abs(ya);
 			} else {
-				if (!collision(xa, abs(ya))) {
+				if (!collision(xa, Math.abs(ya))) {
 					this.y += ya;
 				}
 				ya = 0;

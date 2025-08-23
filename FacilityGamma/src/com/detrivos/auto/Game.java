@@ -44,6 +44,8 @@ import com.detrivos.auto.ui.UI;
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
+	//TODO:: Manage this mess below
+	//window related
 	public static int width = 400;
 	public static int height = width / 16 * 9;
 	public static int scale = 3;
@@ -51,12 +53,15 @@ public class Game extends Canvas implements Runnable {
 	public static int absWidth = (width * scale) * res;
 	public static int absHeight = (height * scale) * res;
 
+	//story mode
 	public static boolean hasSave = false;
 
+	//menu
 	public static boolean onMainMenu = true;
 	public static boolean onExpMenu = false;
 	public static boolean onPauseMenu = false;
-	
+
+	//state management
 	public static boolean startStory = false;
 	public static boolean startChallenge = false;
 	public static boolean onchal = false;
@@ -66,12 +71,16 @@ public class Game extends Canvas implements Runnable {
 
 	public static boolean onMenuSelect = false;
 
+	//death
 	public static boolean doRespawn = false;
 	private boolean hideGUI = false;
 
+	//IO
 	private Screen screen;
 	private Keyboard key = new Keyboard();
 	public static Mouse m;
+
+	//Game
 	private Player player;
 	private Player storyPlayer = new Player(16 * 4 - 8, 16 * 3 - 9, key, true);
 	private PlayerStatsBar health;
@@ -79,6 +88,7 @@ public class Game extends Canvas implements Runnable {
 	private static StoryUI ui;
 	public static Challenge chal;
 
+	//UI
 	private BulletBar pistol;
 	private BulletBar scatter;
 	private BulletBar machine;
@@ -87,6 +97,7 @@ public class Game extends Canvas implements Runnable {
 
 	private UI bg;
 
+	//Levels
 	private Level level;
 	private Level menuLevel = new MenuLevel("/levels/menuLevel.png");
 	private Level cryo = new CryoRoom("/levels/cryo.png");
@@ -95,13 +106,16 @@ public class Game extends Canvas implements Runnable {
 	private Level turHall3 = new TurretHall3("/levels/turretHall3.png");
 	private Level leech1 = new LeecherTunnel1("/levels/leecherTun1.png");
 
+	//Font
 	private Font font = new Font("Terminal", 2, 20);
 	private Font bulFont = new Font("Terminal", 1, 15);
 	private FontMetrics fm;
 	private String thought;
 
+	//???
 	private int coolDown = 0;
 
+	//UI
 	private Menu menu;
 	private Menu expMenu = new ExpMenu(key);
 	private Menu pauseMenu = new PauseMenu(key);
@@ -109,21 +123,25 @@ public class Game extends Canvas implements Runnable {
 	private UI pauseSelect = UI.pauseSelect;
 	private boolean rMShown = false;
 
+	//Engine
 	private Thread thread;
 	private JFrame frame;
 	private String title = "Facility Gamma";
 	private boolean running = true;
 	public static boolean focus = false;
 
+	//More state
 	public static boolean toCryo = false;
 	public static boolean toTurHall = false;
 	public static boolean turhall2 = false;
 	public static boolean toturhall3 = false;
 	public static boolean toleech1 = false;
 
+	//rendering
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
+	/// Main constructor
 	public Game() {
 		Dimension d = new Dimension((width * scale) * res, (height * scale) * res);
 		setPreferredSize(d);
@@ -141,13 +159,15 @@ public class Game extends Canvas implements Runnable {
 		addMouseListener(m);
 		addMouseMotionListener(m);
 	}
-
+//TODO:: This is overengineered for what this is
+	/// starts the program
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "Practice");
 		thread.start();
 	}
 
+	/// stops the program
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -161,6 +181,7 @@ public class Game extends Canvas implements Runnable {
 		paused = bool;
 	}
 
+	/// init method that initializes the frame
 	private void init() {
 		frame.setResizable(false);
 		frame.setTitle(title);
@@ -175,6 +196,7 @@ public class Game extends Canvas implements Runnable {
 		frame.requestFocus();
 	}
 
+	/// main game loop
 	public void run() {
 		init();
 		long lastTime = System.nanoTime();
@@ -203,6 +225,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	@SuppressWarnings("static-access")
+	/// update method
 	private void tick() {
 		coolDown--;
 		if (coolDown < 0) coolDown = 0;

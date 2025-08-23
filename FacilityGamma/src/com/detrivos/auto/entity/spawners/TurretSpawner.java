@@ -6,6 +6,7 @@ import com.detrivos.auto.Game;
 import com.detrivos.auto.entity.Entity;
 import com.detrivos.auto.entity.assets.Player;
 import com.detrivos.auto.entity.assets.Turret;
+import com.detrivos.auto.graphics.Screen;
 import com.detrivos.auto.level.Level;
 
 public class TurretSpawner extends Spawner {
@@ -27,9 +28,13 @@ public class TurretSpawner extends Spawner {
 		respawn++;
 		changeDif = (Game.chal.dif / 4.0);
 		if (Game.chal.dif > 3) {
-			if (respawn > (501 * changeDif) && ents.size() == 1) respawn = 1;
+			if (respawn > (501 * changeDif) && ents.size() == 1) {
+				respawn = 1;
+			}
 		} else {
-			if (respawn > (501) && ents.size() == 1) respawn = 1;
+			if (respawn > (501) && ents.size() == 1) {
+				respawn = 1;
+			}
 		}
 		if (ents.size() == 1 && players.size() > 0) {
 			if (Game.chal.dif > 3) {
@@ -43,7 +48,12 @@ public class TurretSpawner extends Spawner {
 			}
 		}
 	}
-	
+
+	@Override
+	public void render(Screen screen) {
+
+	}
+
 	private void spawn() {
 		for (int i = 0; i < Game.chal.dif; i++) {
 			if (Game.chal.dif < 2) level.add(new Turret((int) (this.x / 16) + xOffset(5), (int) (this.y / 16) + yOffset(5), Turret.Type.NORMAL));
