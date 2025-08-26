@@ -57,7 +57,7 @@ public class Rocket extends Projectile {
 		if (!exploded) move();
 	}
 	
-	protected void move() {
+	public void move() {
 		xPos += nx;
 		yPos += ny;
 		if (distance() > range) {

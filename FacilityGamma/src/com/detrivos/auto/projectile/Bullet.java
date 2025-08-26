@@ -40,7 +40,7 @@ public class Bullet extends Projectile {
 		move();
 	}
 	
-	protected void move() {
+	public void move() {
 		xPos += nx;
 		yPos += ny;
 		if (distance() > range) remove();

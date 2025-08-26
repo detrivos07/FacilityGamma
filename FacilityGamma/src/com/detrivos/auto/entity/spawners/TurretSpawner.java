@@ -18,7 +18,7 @@ public class TurretSpawner extends Spawner {
 	boolean changed = false;
 	
 	public TurretSpawner(int x, int y, int amount, Level level) {
-		super (x, y, Type.MOB, amount, level);
+		super (x, y, amount, level);
 		tick();
 	}
 	

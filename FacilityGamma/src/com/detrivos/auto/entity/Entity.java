@@ -16,7 +16,7 @@ public abstract class Entity {
 
 	/// movement
 	protected Direction dir;
-	protected double xPos, yPos, xMov, yMov;
+	protected double xPos, yPos, xMov, yMov, xTilePos, yTilePos;
 	protected double speed = 1;
 	protected boolean moving = false;
 
@@ -39,7 +39,7 @@ public abstract class Entity {
 
 	public abstract void render(Screen screen);
 
-	public void move(double xa, double ya) {}
+	public void move() {}
 	
 	public void setRemove(boolean remove) {
 		if (remove == false) removed = false;
@@ -83,9 +83,14 @@ public abstract class Entity {
 			double yt = ((yPos + ya) + c / 2 * -1 + 1) / 16;
 			int ix = (int) Math.ceil(xt);
 			int iy = (int) Math.ceil(yt);
-			if (c % 2 == 0) ix = (int) Math.floor(xt);
-			if (c / 2 == 0) iy = (int) Math.floor(yt);
-			if (level.getTile(ix, iy).isSolid()) solid = true;
+			if (c % 2 == 0)
+				ix = (int) Math.floor(xt);
+			if (c / 2 == 0)
+				iy = (int) Math.floor(yt);
+			if (level.getTile(ix, iy).isSolid())
+				solid = true;
+			xTilePos = ix;
+			yTilePos = iy;
 		}
 		return solid;
 	}

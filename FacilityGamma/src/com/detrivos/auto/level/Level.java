@@ -42,19 +42,7 @@ public class Level {
 	protected void loadLevel(String path) {
 	}
 
-	private int tickCounter = 0;
 	public void tick() {
-		tickCounter++;
-		if (tickCounter % 60 == 0) {  // Every second
-			System.out.println("Level tick " + tickCounter/60 + "s - Entities: " + entities.size());
-		}
-
-		for (int i = 0; i < entities.size(); i++) {
-			System.out.println("Ticking entity " + i + ": " + entities.get(i).getClass().getSimpleName());
-			entities.get(i).tick();
-			System.out.println("Finished entity " + i);
-		}
-
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).tick();
 		}

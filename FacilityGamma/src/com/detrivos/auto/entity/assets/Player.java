@@ -56,7 +56,6 @@ public class Player extends Entity {
 	private Sprite sprite;
 
 	private double dx = 0, dy = 0;
-	private double ox, oy;
 	private double pdir = 0;
 
 	private int baseHealth = 100;
@@ -276,7 +275,7 @@ public class Player extends Entity {
 		}
 
 		if (collision(4, 0) || collision(0, 4) || collision(-14, 0) || collision(0, -14)) {
-			if (level.getTile((int) (ox), (int) (oy)).hasGun()) {
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)).hasGun()) {
 				if (isClothed)
 					animNum = 3;
 				else
@@ -284,7 +283,7 @@ public class Player extends Entity {
 				isArmed = true;
 			}
 
-			if (level.getTile((int) (ox), (int) (oy)).hasClothes()) {
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)).hasClothes()) {
 				if (isArmed)
 					animNum = 3;
 				else
@@ -293,33 +292,33 @@ public class Player extends Entity {
 			}
 		}
 
-		if (level.getTile((int) ox, (int) oy) instanceof ToCryoTile) {
+		if (level.getTile((int) xTilePos, (int) yTilePos) instanceof ToCryoTile) {
 			Game.toCryo = true;
 		} else {
 			Game.toCryo = false;
 		}
-		if (level.getTile((int) ox, (int) oy) instanceof ToTurHallTile) {
+		if (level.getTile((int) xTilePos, (int) yTilePos) instanceof ToTurHallTile) {
 			Game.toTurHall = true;
 		} else {
 			Game.toTurHall = false;
 		}
-		if (level.getTile((int) ox, (int) oy) instanceof ToTurHall2Tile) {
+		if (level.getTile((int) xTilePos, (int) yTilePos) instanceof ToTurHall2Tile) {
 			Game.turhall2 = true;
 		} else {
 			Game.turhall2 = false;
 		}
-		if (level.getTile((int) ox, (int) oy) instanceof ToTurHall3Tile) {
+		if (level.getTile((int) xTilePos, (int) yTilePos) instanceof ToTurHall3Tile) {
 			Game.toturhall3 = true;
 		} else {
 			Game.toturhall3 = false;
 		}
-		if (level.getTile((int) ox, (int) oy) instanceof ToLeech1Tile) {
+		if (level.getTile((int) xTilePos, (int) yTilePos) instanceof ToLeech1Tile) {
 			Game.toleech1 = true;
 		} else {
 			Game.toleech1 = false;
 		}
 
-		move(xMov, yMov);
+		move();
 
 		if (this.health <= 0) {
 			health = 0;
@@ -508,13 +507,13 @@ public class Player extends Entity {
 	public String thought() {
 		String s = "";
 		if (collision(4, 0) || collision(0, 4) || collision(-14, 0) || collision(0, -14)) {
-			if (level.getTile((int) (ox), (int) (oy)) instanceof PlayerTile) {
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)) instanceof PlayerTile) {
 				s = "This one was mine, the only one that didn't get destroyed...";
 			}
-			if (level.getTile((int) (ox), (int) (oy)) instanceof DoorTile) {
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)) instanceof DoorTile) {
 				s = "Blocked.  By some unknown force...";
 			}
-			if (level.getTile((int) (ox), (int) (oy)) instanceof DeadTile) {
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)) instanceof DeadTile) {
 				if (!collided) {
 					r = random.nextInt(5);
 					collided = true;
@@ -539,11 +538,11 @@ public class Player extends Entity {
 			} else {
 				collided = false;
 			}
-			if (level.getTile((int) (ox), (int) (oy)).hasGun()) {s = "A pistol!";}
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)).hasGun()) {s = "A pistol!";}
 
-			if (level.getTile((int) (ox), (int) (oy)).hasClothes()) {s = "Clothes!";}
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)).hasClothes()) {s = "Clothes!";}
 
-			if (level.getTile((int) (ox), (int) (oy)) instanceof ChangeTile && gunThought) {
+			if (level.getTile((int) (xTilePos), (int) (yTilePos)) instanceof ChangeTile && gunThought) {
 				s = "I should find something to protect myself...";
 			}
 		} else {
@@ -605,12 +604,6 @@ public class Player extends Entity {
 	}
 
 	public void move() {
-		if (xMov != 0 && yMov != 0) {
-			move(xMov, 0);
-			move(0, yMov);
-			return;
-		}
-
 		if (xMov > 0)
 			dir = Direction.RIGHT;
 		if (xMov < 0)
@@ -636,70 +629,29 @@ public class Player extends Entity {
 				yMov = 0;
 			}
 		} else if (hasControl) {
-			while (xMov != 0) {
-				if (collision(0, 0) & !collision(1, 0))
-					this.xPos += 0.5;
-				if (collision(0, 0) & !collision(-1, 0))
-					this.xPos -= 0.5;
-				if (collision(0, 0) & !collision(0, 1))
-					this.yPos += 0.5;
-				if (collision(0, 0) & !collision(0, -1))
-					this.yPos -= 0.5;
-				if (Math.abs(xMov) > 1) {
-					if (!collision(xMov, yMov)) {
-						this.xPos += xMov;
-					}
-					if (xMov > 0) {
-						xMov -= Math.abs(xMov);
-					} else {
-						xMov += Math.abs(xMov);
-					}
-				} else {
-					if (!collision(xMov, yMov)) {
-						this.xPos += xMov;
-					}
-					xMov = 0;
+			if (collision(0, 0) & !collision(1, 0))
+				this.xPos += 0.5;
+			if (collision(0, 0) & !collision(-1, 0))
+				this.xPos -= 0.5;
+			if (collision(0, 0) & !collision(0, 1))
+				this.yPos += 0.5;
+			if (collision(0, 0) & !collision(0, -1))
+				this.yPos -= 0.5;
+
+			if (xMov != 0) {
+				if (!collision(xMov, yMov)) {
+					this.xPos += xMov;
 				}
+				xMov = 0;
 			}
 
-			while (yMov != 0) {
-				if (Math.abs(yMov) > 1) {
-					if (!collision(xMov, yMov)) {
-						this.yPos += yMov;
-					}
-					if (yMov > 0) {
-						yMov -= Math.abs(yMov);
-					} else {
-						yMov += Math.abs(yMov);
-					}
-				} else {
-					if (!collision(xMov, yMov)) {
-						this.yPos += yMov;
-					}
-					yMov = 0;
+			if (yMov != 0) {
+				if (!collision(xMov, yMov)) {
+					this.yPos += yMov;
 				}
+				yMov = 0;
 			}
 		}
-	}
-
-	protected boolean collision(double xa, double ya) {
-		boolean solid = false;
-		for (int c = 0; c < 4; c++) {
-			// Player Specific
-			double xt = ((xPos + xa) + c % 2 * -6 + 3) / 16;
-			double yt = ((yPos + ya) + c / 2 * -6 + 3) / 16;
-			int ix = (int) Math.ceil(xt);
-			int iy = (int) Math.ceil(yt);
-			if (c % 2 == 0)
-				ix = (int) Math.floor(xt);
-			if (c / 2 == 0)
-				iy = (int) Math.floor(yt);
-			if (level.getTile(ix, iy).isSolid())
-				solid = true;
-			ox = ix;
-			oy = iy;
-		}
-		return solid;
 	}
 
 	protected void shoot(double x, double y, double dir) {

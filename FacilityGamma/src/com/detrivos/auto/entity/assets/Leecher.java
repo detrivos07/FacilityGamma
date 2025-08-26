@@ -178,12 +178,6 @@ public class Leecher extends Entity {
 	}
 	
 	public void move() {
-		if (xMov != 0 && yMov != 0) {
-			move(xMov, 0);
-			move(0, yMov);
-			return;
-		}
-		
 		if (xMov > 0) dir = Direction.RIGHT;
 		if (xMov < 0) dir = Direction.LEFT;
 		if (yMov > 0) dir = Direction.DOWN;
