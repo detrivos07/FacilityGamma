@@ -35,7 +35,7 @@ public class Landmine extends Entity {
 		List<Projectile> projectiles = level.getProjectiles(this, 4);
 		if (projectiles.size() > 0) {
 			Projectile p = projectiles.get(0);
-			p.remove();
+			p.setRemove(true);
 			exploded = true;
 		}
 		
@@ -48,7 +48,7 @@ public class Landmine extends Entity {
 			}
 			anim.tick();
 			anim.setFrameRate(5);
-			if (anim.getFrame() + 1 > 7) remove();
+			if (anim.getFrame() + 1 > 7) setRemove(true);
 		}
 	}
 

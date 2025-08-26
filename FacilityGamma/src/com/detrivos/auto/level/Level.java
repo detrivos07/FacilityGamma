@@ -1,5 +1,6 @@
 package com.detrivos.auto.level;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.detrivos.auto.graphics.Screen;
 import com.detrivos.auto.level.tile.Tile;
 import com.detrivos.auto.projectile.Projectile;
 import com.detrivos.auto.projectile.Rocket;
+import com.detrivos.auto.utils.ImportUtils;
 
 public class Level {
 
@@ -33,13 +35,13 @@ public class Level {
 	
 	public Level(String path) {
 		loadLevel(path);
-		generateLevel();
-	}
-	
-	protected void generateLevel() {
 	}
 	
 	protected void loadLevel(String path) {
+		BufferedImage image = ImportUtils.loadImage(path);
+		width = image.getWidth();
+		height = image.getHeight();
+		tiles = image.getRGB(0, 0, width, height, tiles, 0, width);
 	}
 
 	public void tick() {
@@ -78,27 +80,28 @@ public class Level {
 			if (players.get(i).isRemoved()) players.remove(i);
 		}
 	}
-	
+
+	/// Systematically removes all entities from the level
 	public void removeAll() {
-		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i).isRemoved()) entities.remove(i);
-			entities.get(i).remove();
+		while (!entities.isEmpty()) {
+			entities.getLast().setRemove(true);
+			entities.removeLast();
 		}
-		for (int i = 0; i < drops.size(); i++) {
-			if (drops.get(i).isRemoved()) drops.remove(i);
-			drops.get(i).remove();
+		while (!drops.isEmpty()) {
+			drops.getLast().setRemove(true);
+			drops.removeLast();
 		}
-		for (int i = 0; i < bars.size(); i++) {
-			if (bars.get(i).isRemoved()) bars.remove(i);
-			bars.get(i).remove();
+		while (!bars.isEmpty()) {
+			bars.getLast().setRemove(true);
+			bars.removeLast();
 		}
-		for (int i = 0; i < projectiles.size(); i++) {
-			if (projectiles.get(i).isRemoved()) projectiles.remove(i);
-			projectiles.get(i).remove();
+		while (!projectiles.isEmpty()) {
+			projectiles.getLast().setRemove(true);
+			projectiles.removeLast();
 		}
-		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).isRemoved()) players.remove(i);
-			players.get(i).remove();
+		while (!players.isEmpty()) {
+			players.getLast().setRemove(true);
+			players.removeLast();
 		}
 	}
 	

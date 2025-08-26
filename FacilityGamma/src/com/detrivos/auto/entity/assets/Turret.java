@@ -70,7 +70,7 @@ public class Turret extends Entity {
 			this.barAdd = true;
 		}
 		
-		if (collision(0, 0)) remove();
+		if (collision(0, 0)) setRemove(true);
 		
 		if (this.health <= 0) dead = true;
 		if (dead) {
@@ -81,7 +81,7 @@ public class Turret extends Entity {
 			}
 			anim.tick();
 			anim.setFrameRate(5);
-			if (anim.getFrame() + 1 > 7) remove();
+			if (anim.getFrame() + 1 > 7) setRemove(true);
 			
 		}
 		
@@ -250,7 +250,7 @@ public class Turret extends Entity {
 					((Rocket) p).exploded = true;
 				} else {
 					this.health -= p.damage;
-					p.remove();
+					p.setRemove(true);
 				}
 			}
 		} else {

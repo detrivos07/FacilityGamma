@@ -11,7 +11,6 @@ import com.detrivos.auto.entity.assets.drops.Medkit;
 import com.detrivos.auto.entity.assets.drops.Medkit.Tier;
 import com.detrivos.auto.entity.assets.story.ShotgunNPC;
 import com.detrivos.auto.level.Level;
-import com.detrivos.auto.level.LevelIn;
 
 public class TurretHall2 extends Level {
 
@@ -20,16 +19,7 @@ public class TurretHall2 extends Level {
 	}
 
 	protected void loadLevel(String path) {
-		try {
-			BufferedImage image = ImageIO.read(LevelIn.class.getResource(path));
-			int w = width = image.getWidth();
-			int h = height = image.getHeight();
-			tiles = new int[w * h];
-			image.getRGB(0, 0, w, h, tiles, 0, w);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("EXCEPTION!!  NO LOAD LEVEL!");
-		}
+		super.loadLevel(path);
 		
 		add(new Turret(3, 8, Type.NORMAL));
 		add(new Turret(11, 5, Type.NORMAL));
@@ -51,8 +41,5 @@ public class TurretHall2 extends Level {
 		add(new Medkit(29, 1, Tier.LOW));
 		add(new Medkit(27, 6, Tier.LOW));
 		add(new Medkit(29, 19, Tier.LOW));
-	}
-	
-	protected void generateLevel() {
 	}
 }

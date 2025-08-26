@@ -42,13 +42,7 @@ public abstract class Entity {
 	public void move() {}
 	
 	public void setRemove(boolean remove) {
-		if (remove == false) removed = false;
-		else removed = true;
-	}
-	
-	public void remove() {
-		//Remove from level
-		removed = true;
+		this.removed = remove;
 	}
 
 	public double getHealth() {
@@ -78,7 +72,6 @@ public abstract class Entity {
 	protected boolean collision(double xa, double ya) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			//Player Specific
 			double xt = ((xPos + xa) + c % 2 * -9 + 4) / 16;
 			double yt = ((yPos + ya) + c / 2 * -1 + 1) / 16;
 			int ix = (int) Math.ceil(xt);

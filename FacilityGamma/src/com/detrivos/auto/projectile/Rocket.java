@@ -41,7 +41,7 @@ public class Rocket extends Projectile {
 		if (level.tileCollision((int) (xPos + nx), (int) (yPos + ny), 0, 0, 0)) {
 			exploded = true;
 			if (anim.getFrame() >= 7) {
-				remove();
+				setRemove(true);
 			}
 		}
 		
@@ -52,7 +52,7 @@ public class Rocket extends Projectile {
 			}
 			anim.tick();
 			anim.setFrameRate(5);
-			if (anim.getFrame() >= 7) remove();
+			if (anim.getFrame() >= 7) setRemove(true);
 		}
 		if (!exploded) move();
 	}

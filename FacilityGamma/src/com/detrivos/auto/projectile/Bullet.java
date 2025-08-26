@@ -35,7 +35,7 @@ public class Bullet extends Projectile {
 
 	public void tick() {
 		if (level.tileCollision((int) (xPos + nx), (int) (yPos + ny), 0, 0, 0)) {
-			remove();
+			setRemove(true);
 		}
 		move();
 	}
@@ -43,7 +43,7 @@ public class Bullet extends Projectile {
 	public void move() {
 		xPos += nx;
 		yPos += ny;
-		if (distance() > range) remove();
+		if (distance() > range) setRemove(true);
 	}
 	
 	protected double distance() {

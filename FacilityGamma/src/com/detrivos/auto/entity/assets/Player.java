@@ -370,7 +370,7 @@ public class Player extends Entity {
 							SoundClip.play(hp, -10.0f);
 					}
 					if (!fh)
-						e.remove();
+						e.setRemove(true);
 				}
 
 				if (e instanceof BulletDrops) {
@@ -385,7 +385,7 @@ public class Player extends Entity {
 							rockets += ((BulletDrops) e).quantity;
 						((BulletDrops) e).gave = true;
 					}
-					e.remove();
+					e.setRemove(true);
 				}
 			}
 		}
@@ -397,7 +397,7 @@ public class Player extends Entity {
 			Projectile p = projectiles.get(0);
 			if (p.type != 0) {
 				if (p instanceof Bullet) {
-					p.remove();
+					p.setRemove(true);
 					SoundClip.play(hurt, -10.0f);
 					this.health -= p.damage;
 				}

@@ -27,7 +27,7 @@ public class HealthBar extends Entity {
 	
 	private void changeWidth() {
 		if (m.health > 6) this.width = (int) ((int) (m.health * oWidth) / health);
-		else if (m.health <= 0) remove();
+		else if (m.health <= 0) setRemove(true);
 		else this.width = 1;
 	}
 	

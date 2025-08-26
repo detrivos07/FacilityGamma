@@ -42,8 +42,8 @@ public class Leecher extends Entity {
 			this.barAdd = true;
 		}
 		if (this.health <= 0) {
-			bar.remove();
-			remove();
+			bar.setRemove(true);
+			setRemove(true);
 		}
 		
 		List<Player> players = level.getPlayers(this, 10 * 16);
@@ -147,7 +147,7 @@ public class Leecher extends Entity {
 		if (projectiles.size() > 0) {
 			for (int i = 0; i < projectiles.size(); i++) {
 				Projectile p = projectiles.get(i);
-				p.remove();
+				p.setRemove(true);
 				this.health -= p.damage;
 			}
 		}

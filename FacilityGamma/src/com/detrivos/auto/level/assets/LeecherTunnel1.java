@@ -11,7 +11,6 @@ import com.detrivos.auto.entity.assets.Turret.Type;
 import com.detrivos.auto.entity.assets.drops.Medkit;
 import com.detrivos.auto.entity.assets.drops.Medkit.Tier;
 import com.detrivos.auto.level.Level;
-import com.detrivos.auto.level.LevelIn;
 
 public class LeecherTunnel1 extends Level {
 
@@ -20,16 +19,7 @@ public class LeecherTunnel1 extends Level {
 	}
 
 	protected void loadLevel(String path) {
-		try {
-			BufferedImage image = ImageIO.read(LevelIn.class.getResource(path));
-			int w = width = image.getWidth();
-			int h = height = image.getHeight();
-			tiles = new int[w * h];
-			image.getRGB(0, 0, w, h, tiles, 0, w);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("EXCEPTION!!  NO LOAD LEVEL!");
-		}
+		super.loadLevel(path);
 		
 		add(new Turret(9, 2, Type.NORMAL));
 		add(new Turret(36, 6, Type.NORMAL));
@@ -44,8 +34,5 @@ public class LeecherTunnel1 extends Level {
 		add(new Medkit(25, 6, Tier.LOW));
 		
 		add(new Medkit(45, 4, Tier.MID));
-	}
-	
-	protected void generateLevel() {
 	}
 }

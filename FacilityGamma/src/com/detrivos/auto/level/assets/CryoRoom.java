@@ -14,7 +14,6 @@ import com.detrivos.auto.entity.assets.story.Note;
 import com.detrivos.auto.entity.assets.story.Note.Type;
 import com.detrivos.auto.graphics.Sprite;
 import com.detrivos.auto.level.Level;
-import com.detrivos.auto.level.LevelIn;
 
 public class CryoRoom extends Level {
 
@@ -23,16 +22,7 @@ public class CryoRoom extends Level {
 	}
 
 	protected void loadLevel(String path) {
-		try {
-			BufferedImage image = ImageIO.read(LevelIn.class.getResource(path));
-			int w = width = image.getWidth();
-			int h = height = image.getHeight();
-			tiles = new int[w * h];
-			image.getRGB(0, 0, w, h, tiles, 0, w);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("EXCEPTION!!  NO LOAD LEVEL!");
-		}
+		super.loadLevel(path);
 		
 		add(new CryoPod(16 * 4, 16 * 3, true, null));
 		add(new CryoPod(16 * 6, 16 * 3, false, Sprite.cryoPod1));
@@ -49,8 +39,5 @@ public class CryoRoom extends Level {
 		add(new BulletDrops(16 * 13, 16 * 8, BType.PISTOL, 15));
 		add(new BulletDrops(16 * 20, 16 * 6, BType.PISTOL, 15));
 		add(new BulletDrops(16 * 15, 16 * 2, BType.PISTOL, 15));
-	}
-	
-	protected void generateLevel() {
 	}
 }

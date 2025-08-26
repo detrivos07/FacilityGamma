@@ -1,5 +1,7 @@
 package com.detrivos.auto.graphics;
 
+import com.detrivos.auto.utils.ImportUtils;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -154,8 +156,7 @@ public class Sprite {
 		SIZE = size;
 		width = size;
 		height = size;
-		pixels = new int[SIZE * SIZE];
-		loadFromFile();
+		pixels = ImportUtils.loadImage(path).getRGB(0, 0, size, size, pixels, 0, size);
 	}
 	
 	public Sprite(String path, int width, int height) {
@@ -163,8 +164,7 @@ public class Sprite {
 		SIZE = -1;
 		this.width = width;
 		this.height = height;
-		pixels = new int[this.width * this.height];
-		loadFromFile();
+		pixels = ImportUtils.loadImage(path).getRGB(0, 0, width, height, pixels, 0, width);
 	}
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
@@ -270,18 +270,6 @@ public class Sprite {
 			for(int x = 0; x < SIZE; x++) {
 				pixels[x + y * SIZE] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.WIDTH];
 			}
-		}
-	}
-	
-	private void loadFromFile() {
-		try {
-			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
-			int w = image.getWidth();
-			int h = image.getHeight();
-			image.getRGB(0, 0, w, h, pixels, 0, w);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("NO LOAD SPRITE");
 		}
 	}
 }

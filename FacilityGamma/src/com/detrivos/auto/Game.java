@@ -28,7 +28,6 @@ import com.detrivos.auto.level.Level;
 import com.detrivos.auto.level.assets.ChallengeLevel;
 import com.detrivos.auto.level.assets.CryoRoom;
 import com.detrivos.auto.level.assets.LeecherTunnel1;
-import com.detrivos.auto.level.assets.MenuLevel;
 import com.detrivos.auto.level.assets.TurretHall;
 import com.detrivos.auto.level.assets.TurretHall2;
 import com.detrivos.auto.level.assets.TurretHall3;
@@ -99,12 +98,12 @@ public class Game extends Canvas implements Runnable {
 
 	//Levels
 	private Level level;
-	private Level menuLevel = new MenuLevel("/levels/menuLevel.png");
-	private Level cryo = new CryoRoom("/levels/cryo.png");
-	private Level turHall1 = new TurretHall("/levels/turretHall.png");
-	private Level turHall2 = new TurretHall2("/levels/turretHall2.png");
-	private Level turHall3 = new TurretHall3("/levels/turretHall3.png");
-	private Level leech1 = new LeecherTunnel1("/levels/leecherTun1.png");
+	private Level menuLevel = new Level("levels/menuLevel.png");
+	private Level cryo = new CryoRoom("levels/cryo.png");
+	private Level turHall1 = new TurretHall("levels/turretHall.png");
+	private Level turHall2 = new TurretHall2("levels/turretHall2.png");
+	private Level turHall3 = new TurretHall3("levels/turretHall3.png");
+	private Level leech1 = new LeecherTunnel1("levels/leecherTun1.png");
 
 	//Font
 	private Font font = new Font("Terminal", 2, 20);
